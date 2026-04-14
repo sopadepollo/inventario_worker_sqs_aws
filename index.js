@@ -1,4 +1,5 @@
 //Worker: index.js
+require('dotenv').config();
 const {SQSClient, ReceiveMessageCommand, DeleteMessageCommand} = require("@aws-sdk/client-sqs");
 const {pool} = require('./config/db');
 const sqsClient = new SQSClient({region: process.env.AWS_REGION})
@@ -10,7 +11,7 @@ async function procesarCola(){
 			MaxNumberOfMessages: 10,
 			WaitTimeSeconds: 5
 		}));
-		if(Message){
+		if(Messages){
 			for(const mensaje of Messages){
 				const producto = JSON.parse(mensaje.Body);
 				try{
