@@ -15,10 +15,10 @@ async function procesarCola(){
 			for(const mensaje of Messages){
 				const producto = JSON.parse(mensaje.Body);
 				try{
-					#insertar en RDS
+					//insertar en RDS
 					await pool.query('INSERT INTO productos (nombre, stock) VALUES ($1, $2)', [producto.nombre, producto.stock]);
 					console.log(`producto insertado: ${producto.nombre}`);
-					#borrar el mensaje, si no se borra, sqs lo dara a otro worker y se duplicara la peticion
+					//borrar el mensaje, si no se borra, sqs lo dara a otro worker y se duplicara la peticion
 					await pool.query(new DeleteMessageCommand({
 						QueueUrl: process.env.SQS_QUEUE_URL,
 						ReceiptHandle: mensaje.ReceiptHandle
