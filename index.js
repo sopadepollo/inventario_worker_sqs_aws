@@ -22,7 +22,7 @@ async function procesarCola(){
 				}
 				try{
 					//insertar en RDS
-					await pool.query('INSERT INTO productos (sku, nombre, precio, stock, descripcion) VALUES ($1, $2, $3, $4, $5)', [producto.nombre, producto.precio, producto.stock, producto.descripcion]);
+					await pool.query('INSERT INTO productos (sku, nombre, precio, stock, descripcion) VALUES ($1, $2, $3, $4, $5)', [producto.sku, producto.nombre, producto.precio, producto.stock, producto.descripcion]);				
 					console.log(`producto insertado: ${producto.nombre}`);
 					//borrar el mensaje, si no se borra, sqs lo dara a otro worker y se duplicara la peticion
 					await pool.query(new DeleteMessageCommand({
