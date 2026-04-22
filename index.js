@@ -47,15 +47,9 @@ const crearProducto = async (payload) => {
 		const sufijo=Math.floor(Math.random()*10000);
 		payload.sku=`${prefijo}-${sufijo}`;
 	}
-		//insertar en RDS
-		await writePool.query('INSERT INTO productos (sku, nombre, precio, stock, descripcion) VALUES ($1, $2, $3, $4, $5)', [payload.sku, payload.nombre, payload.precio, payload.stock, payload.descripcion]);
-		console.log(`producto insertado: ${payload.nombre}`);
-		//borrar el mensaje, si no se borra, sqs lo dara a otro worker >
-		await sqsClient.send(new DeleteMessageCommand({
-			QueueUrl: process.env.SQS_QUEUE_URL,
-			ReceiptHandle: mensaje.ReceiptHandle
-		}));
-
+	//insertar en RDS
+	await writePool.query('INSERT INTO productos (sku, nombre, precio, stock, descripcion) VALUES ($1, $2, $3, $4, $5)', [payload.sku, payload.nombre, payload.precio, payload.stock, payload.descripcion]);
+	console.log(`producto insertado: ${payload.nombre}`);
 };
 
 const updateProducto = (sku, payload) => {
