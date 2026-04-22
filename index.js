@@ -41,7 +41,7 @@ async function procesarCola(){
 }
 procesarCola();
 
-const crearProducto = (payload) => {
+const crearProducto = async (payload) => {
 	if(!paylod.sku){
 		const prefijo=payload.nombre.substring(0,3).toUpperCase();
 		const sufijo=Math.floor(Math.random()*10000);
